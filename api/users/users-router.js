@@ -1,9 +1,20 @@
 const express = require('express');
+const users = require("./users-model")
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   // RETURN AN ARRAY WITH ALL THE USERS
+      users.get()
+      .then((user)=> {
+         res.json(user)
+      })
+      .catch((err)=>{
+        console.log(err)
+        res.status(500).json({
+          message: "Couldn't connect to server"
+        })
+      })
 });
 
 router.get('/:id', (req, res) => {
@@ -39,3 +50,4 @@ router.post('/:id/posts', (req, res) => {
 });
 
 // do not forget to export the router
+module.exports = router
